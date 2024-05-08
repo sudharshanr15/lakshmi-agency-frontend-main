@@ -15,6 +15,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
     "react-toastify": "^10.0.5",
+    "react18-input-otp": "^1.1.4",
     "zod": "^3.23.7"
   },
   "devDependencies": {
