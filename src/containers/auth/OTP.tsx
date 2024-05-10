@@ -2,6 +2,7 @@ import { validateOTP } from "@/lib/server_api/auth";
 import { loginSession } from "@/lib/session";
 import { OTPSchema, OTPSchemaType } from "@/types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import OtpInput from "react18-input-otp";
