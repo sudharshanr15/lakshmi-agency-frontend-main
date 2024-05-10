@@ -10,76 +10,80 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import Link from "next/link";
 import CategoryMenu from "./CategoryMenu";
+import MobileNavbar from "./MobileNavbar";
 
 function Navbar() {
     const [categoryOpen, setCategoryOpen] = useState(false)
 
     return (
-        <div className="w-full bg-primary relative max-h-screen z-50">
-            <div className="hidden xl:flex w-full justify-between text-white max-w-[1800px] mx-auto items-center gap-8 pt-4 px-4">
-                <Link href={"/"} className="text-white font-bold">
-                    <img src="/assets/images/Lakshmi.png" className="inline h-full max-h-[48px] w-auto" alt="Brand Image" />
-                    <span className="ms-2 text-nowrap">LAKSHMI AGENCY</span>
-                </Link>
-                <div>
-                    <MyLocationIcon className="me-2" />
-                    Delivery to trichy - <span className="text-secondary-yellow">600000</span>
-                </div>
-                <div className="bg-white text-black rounded-md py-2 pl-10 pr-4 sm:text-sm flex-grow max-w-[600px] flex">
-                    <input
-                        type="text"
-                        className="flex-grow focus:outline-none placeholder-gray-400 me-4"
-                        placeholder="Search for any products..."
-                    />
-                    <SearchIcon className="text-secondary-yellow" />
-                </div>
-                <div>
-                    <button className="text-white">
-                        <PersonIcon fontSize="large" />
-                        <span className="inline-block ms-2">Jhon Doe</span>
-                    </button>
-                </div>
-            </div>
-            <div className="xl:hidden w-full p-4">
-                <div className="flex justify-between mb-4">
-                    <button>
-                        <MenuIcon className="text-secondary-yellow" />
-                    </button>
+        <>
+            <div className="w-full bg-primary relative max-h-screen z-50">
+                <div className="hidden xl:flex w-full justify-between text-white max-w-[1800px] mx-auto items-center gap-8 pt-4 px-4">
                     <Link href={"/"} className="text-white font-bold">
-                        <img src="/assets/images/Lakshmi.png" className="inline h-full max-h-[24px] w-auto" alt="Brand Image" />
-                        <span className="ms-2 text-sm text-nowrap">LAKSHMI AGENCY</span>
+                        <img src="/assets/images/Lakshmi.png" className="inline h-full max-h-[48px] w-auto" alt="Brand Image" />
+                        <span className="ms-2 text-nowrap">LAKSHMI AGENCY</span>
                     </Link>
-                    <button>
-                        <ContactSupportIcon className="text-secondary-yellow" />
-                    </button>
+                    <div>
+                        <MyLocationIcon className="me-2" />
+                        Delivery to trichy - <span className="text-secondary-yellow">600000</span>
+                    </div>
+                    <div className="bg-white text-black rounded-md py-2 pl-10 pr-4 sm:text-sm flex-grow max-w-[600px] flex">
+                        <input
+                            type="text"
+                            className="flex-grow focus:outline-none placeholder-gray-400 me-4"
+                            placeholder="Search for any products..."
+                        />
+                        <SearchIcon className="text-secondary-yellow" />
+                    </div>
+                    <div>
+                        <button className="text-white">
+                            <PersonIcon fontSize="large" />
+                            <span className="inline-block ms-2">Jhon Doe</span>
+                        </button>
+                    </div>
                 </div>
-                <div className="bg-white text-black rounded-md py-2 p-2 text-sm flex">
-                    <input
-                        type="text"
-                        className="flex-grow focus:outline-none placeholder-gray-400 me-4"
-                        placeholder="Search for any products..."
-                    />
-                    <SearchIcon className="text-secondary-yellow" />
+                <div className="xl:hidden w-full p-4">
+                    <div className="flex justify-between mb-4">
+                        <button>
+                            <MenuIcon className="text-secondary-yellow" />
+                        </button>
+                        <Link href={"/"} className="text-white font-bold">
+                            <img src="/assets/images/Lakshmi.png" className="inline h-full max-h-[24px] w-auto" alt="Brand Image" />
+                            <span className="ms-2 text-sm text-nowrap">LAKSHMI AGENCY</span>
+                        </Link>
+                        <button>
+                            <ContactSupportIcon className="text-secondary-yellow" />
+                        </button>
+                    </div>
+                    <div className="bg-white text-black rounded-md py-2 p-2 text-sm flex">
+                        <input
+                            type="text"
+                            className="flex-grow focus:outline-none placeholder-gray-400 me-4"
+                            placeholder="Search for any products..."
+                        />
+                        <SearchIcon className="text-secondary-yellow" />
+                    </div>
                 </div>
+                <hr className="hidden xl:block border-b border-[#E9EBF0] my-3" />
+                <div className="hidden xl:flex items-center justify-between text-white max-w-[1800px] mx-auto pb-4 px-4">
+                    <div>
+                        <button className="text-sm-bold text-white px-4 border-r border-r-[#E9EBF0]" onClick={() => setCategoryOpen(prev => !prev)}>
+                            <CategoryIcon />
+                            <span className="ms-2">Categories</span>
+                        </button>
+                        <Link href={""} className="text-sm-bold text-white px-4">
+                            <LocalMallIcon />
+                            <span className="ms-2">Orders</span>
+                        </Link>
+                    </div>
+                    <div>
+                        <button className="border border-secondary-yellow text-secondary-yellow px-4 py-2 rounded">Become a Seller</button>
+                    </div>
+                </div>
+                {categoryOpen && <CategoryMenu />}
             </div>
-            <hr className="hidden xl:block border-b border-[#E9EBF0] my-3" />
-            <div className="hidden xl:flex items-center justify-between text-white max-w-[1800px] mx-auto pb-4 px-4">
-                <div>
-                    <button className="text-sm-bold text-white px-4 border-r border-r-[#E9EBF0]" onClick={() => setCategoryOpen(prev => !prev)}>
-                        <CategoryIcon />
-                        <span className="ms-2">Categories</span>
-                    </button>
-                    <Link href={""} className="text-sm-bold text-white px-4">
-                        <LocalMallIcon />
-                        <span className="ms-2">Orders</span>
-                    </Link>
-                </div>
-                <div>
-                    <button className="border border-secondary-yellow text-secondary-yellow px-4 py-2 rounded">Become a Seller</button>
-                </div>
-            </div>
-            {categoryOpen && <CategoryMenu />}
-        </div>
+            <MobileNavbar />
+        </>
         // <div>
         //     {isDrawerOpen && (
         //         <>

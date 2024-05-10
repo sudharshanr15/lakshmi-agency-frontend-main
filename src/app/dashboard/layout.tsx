@@ -5,7 +5,9 @@ export function layout({ children }: PropsWithChildren) {
   return (
     <>
         <Navbar />
-        {children}
+        <main className='mb-32'>
+            {children}
+        </main>
     </>
   )
 }
