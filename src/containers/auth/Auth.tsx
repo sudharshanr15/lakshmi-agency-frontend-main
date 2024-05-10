@@ -15,7 +15,8 @@ const formResponse = {
 };
 
 export function Auth() {
-    const [authState, setAuthState] = useState("login");
+    const [authState, setAuthState] = useState("otp");
+    const [mobile, setMobile] = useState("9945737038")
 
     return (
         <div className="h-screen w-screen overflow-x-hidden relative">
@@ -70,12 +71,11 @@ export function Auth() {
                     </div>
                     <div className="flex-grow">
                         {authState == "login" ? (
-                            <Login setAuthState={setAuthState} />
+                            <Login setAuthState={setAuthState} setMobile={setMobile} />
                         ) : (
                             <OTP
-                            //   mobile={mobile}
+                              mobile={mobile}
                               setAuthState={setAuthState}
-                              mobile={9945737038}
                             />
                         )}
                     </div>

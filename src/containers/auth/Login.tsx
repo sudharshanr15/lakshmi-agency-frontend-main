@@ -1,27 +1,32 @@
+import { sendOTP } from "@/lib/server_api/auth";
+import { LoginSchema, LoginSchemaType } from "@/types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-const Login = ({ setAuthState }) => {
-    const loginSchema = z.object({
-        mobile_no: z.string().length(10, {
-            message: "Mobile number must contain 10 digits",
-        }),
-    });
-
-    type LoginSchemaType = z.infer<typeof loginSchema>;
-
+const Login = ({ setAuthState, setMobile }) => {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors },
     } = useForm<LoginSchemaType>({
-        resolver: zodResolver(loginSchema),
+        resolver: zodResolver(LoginSchema),
     });
 
-    const onSubmit = (data) => {
-        setAuthState("otp")
+    const onSubmit = (data: LoginSchemaType) => {
+        setMobile(data.mobile_no)
+
+        sendOTP(data).then(res => {
+            if(res.status){
+                setAuthState("otp")
+                setError("mobile_no", {type: "custom", message: "Unable to send OTP. Please try again"})
+            }else{
+                setError("mobile_no", {type: "custom", message: "Unable to send OTP. Please try again"})
+            }
+        }).catch(err => {
+            setError("mobile_no", {type: "custom", message: "Unable to send OTP. Please try again"})
+        })
     };
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,3 +1,5 @@
+import { validateOTP } from "@/lib/server_api/auth";
+import { OTPSchema, OTPSchemaType } from "@/types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,25 +9,26 @@ import { z } from "zod";
 const OTP = ({ setAuthState, mobile }) => {
     const [otp, setOtp] = useState("")
 
-    const otpSchema = z.object({
-        otp: z.string().length(6, {
-            message: "OTP must contain 6 digits"
-        })
-    })
-
-    type OtpSchemaType = z.infer<typeof otpSchema>
-
     const {
         register,
         handleSubmit,
         formState: { errors },
-        setValue
-    } = useForm<OtpSchemaType>({
-        resolver: zodResolver(otpSchema)
+        setValue,
+        setError
+    } = useForm<OTPSchemaType>({
+        resolver: zodResolver(OTPSchema)
     })
 
-    function onSubmit(data){
-        console.log(data)
+    function onSubmit(data: OTPSchemaType){
+        validateOTP({ otp: data.otp, mobile_no: mobile}).then(res => {
+            if(res.status){
+
+            }else{
+                setError("otp", { type: "custom", message: res.data.message })
+            }
+        }).catch(err => {
+            setError("otp", { type: "custom", message: "Unable to validate OTP. Please try again!" })
+        })
     }
 
     return (
