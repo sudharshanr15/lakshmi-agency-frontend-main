@@ -15,8 +15,8 @@ const formResponse = {
 };
 
 export function Auth() {
-    const [authState, setAuthState] = useState("otp");
-    const [mobile, setMobile] = useState("9945737038")
+    const [authState, setAuthState] = useState("login");
+    const [mobile, setMobile] = useState("")
 
     return (
         <div className="h-screen w-screen overflow-x-hidden relative">

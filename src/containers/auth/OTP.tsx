@@ -1,4 +1,5 @@
 import { validateOTP } from "@/lib/server_api/auth";
+import { loginSession } from "@/lib/session";
 import { OTPSchema, OTPSchemaType } from "@/types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
@@ -20,9 +21,13 @@ const OTP = ({ setAuthState, mobile }) => {
     })
 
     function onSubmit(data: OTPSchemaType){
-        validateOTP({ otp: data.otp, mobile_no: mobile}).then(res => {
+        validateOTP({ otp: data.otp, mobile_no: mobile}).then(async res => {
             if(res.status){
-
+                if(res.data.message){
+                    await loginSession(res.data.message)
+                    return
+                }
+                setError("otp", { type: "custom", message: res.data.message })
             }else{
                 setError("otp", { type: "custom", message: res.data.message })
             }
