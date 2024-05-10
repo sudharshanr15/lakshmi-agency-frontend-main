@@ -8,16 +8,10 @@ export async function middleware(request: NextRequest){
     let authenticated = await getLoggedUser()
 
     if(!authenticated.status && !(request.nextUrl.pathname == "/")){
-        // return NextResponse.redirect( new URL("/", request.url))
+        return NextResponse.redirect( new URL("/", request.url))
     }else if(authenticated.status && request.nextUrl.pathname == "/"){
         return NextResponse.redirect( new URL("/dashboard", request.url))
     }
-
-    // if(!authenticated.status && !(request.nextUrl.pathname == "/")){
-    //     return NextResponse.redirect( new URL("/?auth=" + authenticated.status + "&message=" + authenticated.message, request.url))
-    // }else if(authenticated.status && !request.nextUrl.pathname.startsWith("/dashboard")){
-    //     return NextResponse.redirect( new URL("/dashboard?auth=" + authenticated.status + "&message=" + authenticated.message, request.url))
-    // }
 }
 
 export const config = {
@@ -29,6 +23,6 @@ export const config = {
        * - _next/image (image optimization files)
        * - favicon.ico (favicon file)
        */
-      '/((?!api|_next/static|_next/image|favicon.ico|image).*)',
+      '/((?!api|_next/static|_next/image|favicon.ico|image|assets).*)',
     ],
   }
