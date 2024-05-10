@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.15.17",
+    "@tanstack/react-query": "^5.35.1",
     "gsap": "^3.12.5",
     "iron-session": "^8.0.1",
     "next": "14.2.3",
