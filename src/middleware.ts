@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest){
     let authenticated = await getLoggedUser()
 
     if(!authenticated.status && !(request.nextUrl.pathname == "/")){
-        return NextResponse.redirect( new URL("/", request.url))
+        // return NextResponse.redirect( new URL("/", request.url))
     }else if(authenticated.status && request.nextUrl.pathname == "/"){
         return NextResponse.redirect( new URL("/dashboard", request.url))
     }
