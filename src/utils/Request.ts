@@ -1,3 +1,5 @@
+import { getAccessToken } from "@/lib/session"
+
 type RequestMethod = "GET" | "POST"
 
 interface RequestParams {
@@ -15,13 +17,14 @@ interface ResponseParams {
 }
 
 export default async function Request({ url, method = "get", isAuthorized = true, headers = {}, body }: RequestParams): Promise<ResponseParams>{
+    const tokens = await getAccessToken()
 
     let params: any = {}
     params.method = method
 
     if(isAuthorized == true){
         params.headers = {
-            "Authorization": "token f339c30e44f23a6:dae219155feeea4"
+            "Authorization": "Bearer " + tokens
         }
     }
 

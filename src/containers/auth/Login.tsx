@@ -1,7 +1,8 @@
 import { sendOTP } from "@/lib/server_api/auth";
+import { getAccessToken } from "@/lib/session";
 import { LoginSchema, LoginSchemaType } from "@/types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = ({ setAuthState, setMobile }) => {
@@ -13,6 +14,10 @@ const Login = ({ setAuthState, setMobile }) => {
     } = useForm<LoginSchemaType>({
         resolver: zodResolver(LoginSchema),
     });
+
+    // useEffect(() => {
+    //     getAccessToken().then(res => console.log(res))
+    // }, [])
 
     const onSubmit = (data: LoginSchemaType) => {
         setMobile(data.mobile_no)

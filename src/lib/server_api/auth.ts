@@ -19,3 +19,8 @@ export async function validateOTP({ mobile_no, otp }: LoginSchemaType & OTPSchem
 
     return Request({ url, method: "POST", isAuthorized: false})
 }
+
+export async function getLoggedUser(){
+    const url = new URL("/api/method/frappe.auth.get_logged_user", HOST_URL)
+    return Request({ url })
+}

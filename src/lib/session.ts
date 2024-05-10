@@ -23,8 +23,8 @@ export async function getSession(){
 
 export async function getAccessToken(): Promise<string>{
     const session = await getSession()
-    if(Object(session).keys().includes("access_token")){
-        return session["access_token"]
+    if(Object.keys(session).includes("tokens")){
+        return session['tokens']["access_token"]
     }else{
         return ""
     }
