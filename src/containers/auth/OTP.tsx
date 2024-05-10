@@ -7,12 +7,10 @@ import { z } from "zod";
 const OTP = ({ setAuthState, mobile }) => {
     const [otp, setOtp] = useState("")
 
-    useEffect(() => {
-        console.log(otp)
-    }, [otp])
-
     const otpSchema = z.object({
-        otp: z.string().length(6)
+        otp: z.string().length(6, {
+            message: "OTP must contain 6 digits"
+        })
     })
 
     type OtpSchemaType = z.infer<typeof otpSchema>
@@ -20,7 +18,8 @@ const OTP = ({ setAuthState, mobile }) => {
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        setValue
     } = useForm<OtpSchemaType>({
         resolver: zodResolver(otpSchema)
     })
@@ -43,10 +42,13 @@ const OTP = ({ setAuthState, mobile }) => {
                         (+91 {mobile})
                     </h2>
                     <div className="w-full flex justify-center gap-x-2 lg:gap-x-8">
-                        <input type="text" name="otp" value={otp} hidden />
+                        <input type="text" className="hidden" value={otp} {...register("otp")} />
                         <OtpInput
                             value={otp}
-                            onChange={(e) => setOtp(e)}
+                            onChange={(e) => {
+                                setOtp(e)
+                                setValue("otp", e)
+                            }}
                             numInputs={6}
                             containerStyle="w-[100%] 2xl:w-[75%] flex justify-between"
                             inputStyle={`otp-inputs ${true ? "border-black" : "border-rose-400"} border-2 scale-105`}
@@ -54,7 +56,7 @@ const OTP = ({ setAuthState, mobile }) => {
                             />
                     </div>
                     <div className="text-center">
-                        {errors.otp?.message && (<p className="mt-5 text-rose-600">{errors.otp?.message}</p>)}
+                        {errors.otp?.message && (<p className="text-rose-600">{errors.otp?.message}</p>)}
                     </div>
                     <div className="flex justify-between">
                         <div>OTP expires in</div>
