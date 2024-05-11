@@ -9,7 +9,7 @@ import Loading from './Loading';
 
 function CategoryItem({ item }: {item: ItemGroupData}){
     return (
-        <Link href={""} className="flex justify-between gap-4 p-4 items-center hover:bg-[#EAEAEA]">
+        <Link href={"/dashboard/categories/" + item.name} className="flex justify-between gap-4 p-4 items-center hover:bg-[#EAEAEA]">
             <div className="ms-4 flex gap-4 items-center">
                 <div className="rounded-full bg-secondary-yellow p-1 aspect-square max-h-[50px]">
                     <img src="/assets/images/pipes.jpg" className='rounded-full aspect-square' alt="" />

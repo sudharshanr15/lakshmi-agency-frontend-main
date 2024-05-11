@@ -39,7 +39,7 @@ function Category() {
     return (
         <div className="p-4 grid grid-cols-3 gap-x-4 gap-y-12">
             {categoryQuery.data.map((item: ItemGroupData, index: number) => (
-                <Link href={""} key={index} className='text-center hover:bg-[#EAEAEA]'>
+                <Link href={"/dashboard/categories/" + item.name} key={index} className='text-center hover:bg-[#EAEAEA]'>
                     <div className="flex flex-col items-center justify-center">
                         <div className="p-2 bg-secondary-yellow max-w-[80px] rounded-full aspect-square overflow-hidden">
                             <img src="/assets/images/pipes.jpg" className="h-full object-cover aspect-square rounded-full" alt="" />
