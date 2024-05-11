@@ -6,18 +6,24 @@ import PersonIcon from '@mui/icons-material/Person';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import CategoryIcon from '@mui/icons-material/Category';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-import MenuIcon from '@mui/icons-material/Menu';
-import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import Link from "next/link";
 import CategoryMenu from "./CategoryMenu";
 import MobileNavbar from "./MobileNavbar";
+import { usePathname } from "next/navigation";
+import MobileTopNavbar from "./mobile_nav/TopNavbar";
 
 function Navbar() {
     const [categoryOpen, setCategoryOpen] = useState(false)
+    const pathname = usePathname()
 
     return (
         <>
             <div className="w-full bg-primary relative max-h-screen z-50">
+                {
+                    (pathname == "/dashboard") && (
+                        <MobileTopNavbar />
+                    )
+                }
                 <div className="hidden xl:flex w-full justify-between text-white max-w-[1800px] mx-auto items-center gap-8 pt-4 px-4">
                     <Link href={"/"} className="text-white font-bold">
                         <img src="/assets/images/Lakshmi.png" className="inline h-full max-h-[48px] w-auto" alt="Brand Image" />
@@ -42,28 +48,6 @@ function Navbar() {
                         </button>
                     </div>
                 </div>
-                <div className="xl:hidden w-full p-4">
-                    <div className="flex justify-between mb-4">
-                        <button>
-                            <MenuIcon className="text-secondary-yellow" />
-                        </button>
-                        <Link href={"/"} className="text-white font-bold">
-                            <img src="/assets/images/Lakshmi.png" className="inline h-full max-h-[24px] w-auto" alt="Brand Image" />
-                            <span className="ms-2 text-sm text-nowrap">LAKSHMI AGENCY</span>
-                        </Link>
-                        <button>
-                            <ContactSupportIcon className="text-secondary-yellow" />
-                        </button>
-                    </div>
-                    <div className="bg-white text-black rounded-md py-2 p-2 text-sm flex">
-                        <input
-                            type="text"
-                            className="flex-grow focus:outline-none placeholder-gray-400 me-4"
-                            placeholder="Search for any products..."
-                        />
-                        <SearchIcon className="text-secondary-yellow" />
-                    </div>
-                </div>
                 <hr className="hidden xl:block border-b border-[#E9EBF0] my-3" />
                 <div className="hidden xl:flex items-center justify-between text-white max-w-[1800px] mx-auto pb-4 px-4">
                     <div>
@@ -82,7 +66,6 @@ function Navbar() {
                 </div>
                 {categoryOpen && <CategoryMenu setCategoryOpen={setCategoryOpen} />}
             </div>
-            <MobileNavbar />
         </>
         // <div>
         //     {isDrawerOpen && (
