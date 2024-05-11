@@ -1,8 +1,10 @@
+import Loading from "@/components/Loading";
 import { validateOTP } from "@/lib/server_api/auth";
 import { loginSession } from "@/lib/session";
 import { OTPSchema, OTPSchemaType } from "@/types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import OtpInput from "react18-input-otp";
@@ -10,6 +12,8 @@ import { z } from "zod";
 
 const OTP = ({ setAuthState, mobile }) => {
     const [otp, setOtp] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+    const [canRedirect, setCanRedirect] = useState(false)
 
     const {
         register,
@@ -21,19 +25,32 @@ const OTP = ({ setAuthState, mobile }) => {
         resolver: zodResolver(OTPSchema)
     })
 
+    useEffect(() => {
+        if(canRedirect){
+            redirect("/dashboard")
+        }
+    }, [canRedirect])
+
     function onSubmit(data: OTPSchemaType){
+        setIsLoading(true)
         validateOTP({ otp: data.otp, mobile_no: mobile}).then(async res => {
             if(res.status){
                 if(res.data.message){
                     await loginSession(res.data.message)
+                    setCanRedirect(true)
                     return
                 }
+                setCanRedirect(false)
                 setError("otp", { type: "custom", message: res.data.message })
             }else{
+                setCanRedirect(false)
                 setError("otp", { type: "custom", message: res.data.message })
             }
         }).catch(err => {
+            setCanRedirect(false)
             setError("otp", { type: "custom", message: "Unable to validate OTP. Please try again!" })
+        }).finally(() => {
+            setIsLoading(false)
         })
     }
 
@@ -79,10 +96,14 @@ const OTP = ({ setAuthState, mobile }) => {
                             Cancel
                         </button>
                         <button
-                            className="w-full py-2 bg-[#f9c650] text-white rounded-lg "
+                            className="w-full py-2 bg-[#f9c650] text-black rounded-lg "
                             type="submit"
+                            disabled={isLoading}
                         >
-                            Submit
+                            <div className="flex items-center justify-center gap-4">
+                                {isLoading && <Loading className="text-black" width={20} height={20} />}
+                                <span>Submit</span>
+                            </div>
                         </button>
                     </div>
                 </div>

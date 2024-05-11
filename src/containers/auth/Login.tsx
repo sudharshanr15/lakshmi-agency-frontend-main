@@ -1,8 +1,9 @@
+import Loading from "@/components/Loading";
 import { sendOTP } from "@/lib/server_api/auth";
 import { getAccessToken } from "@/lib/session";
 import { LoginSchema, LoginSchemaType } from "@/types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = ({ setAuthState, setMobile }) => {
@@ -15,11 +16,14 @@ const Login = ({ setAuthState, setMobile }) => {
         resolver: zodResolver(LoginSchema),
     });
 
+    const [isLoading, setIsLoading] = useState(false)
+
     // useEffect(() => {
     //     getAccessToken().then(res => console.log(res))
     // }, [])
 
     const onSubmit = (data: LoginSchemaType) => {
+        setIsLoading(true)
         setMobile(data.mobile_no)
 
         sendOTP(data).then(res => {
@@ -31,6 +35,8 @@ const Login = ({ setAuthState, setMobile }) => {
             }
         }).catch(err => {
             setError("mobile_no", {type: "custom", message: "Unable to send OTP. Please try again"})
+        }).finally(() => {
+            setIsLoading(false)
         })
     };
     return (
@@ -89,10 +95,14 @@ const Login = ({ setAuthState, setMobile }) => {
 
                     <div className="flex justify-center mt-6">
                         <button
-                            className="w-full py-2 mt-2 bg-[#f9c650] text-white rounded-lg "
+                            className="w-full py-2 mt-2 bg-[#f9c650] text-black rounded-lg "
                             type="submit"
+                            disabled={isLoading}
                         >
-                            Submit
+                            <div className="flex items-center justify-center gap-4">
+                                {isLoading && <Loading className="text-black" width={20} height={20} />}
+                                <span>Submit</span>
+                            </div>
                         </button>
                     </div>
                 </div>
