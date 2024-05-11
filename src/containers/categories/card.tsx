@@ -85,7 +85,11 @@ const Card = (params: CategoryItemData) => {
       </div>
       <div className="flex justify-between py-3 text-sm">
         <div>
-          <p className="py-1 text-green-400">In Stock</p>
+            {
+                (params.disabled.toString() == '0') ?
+                <p className="py-1 text-green-400">In Stock</p> :
+                <p className="py-1 text-red-400">Disabled</p>
+            }
           <p className="pt-1">{params.description}</p>
         </div>
         <div className="custom-number-input h-10 w-32">

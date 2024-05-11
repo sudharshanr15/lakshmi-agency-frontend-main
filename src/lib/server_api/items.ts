@@ -17,11 +17,11 @@ export async function getItemGroups(){
     return Request({ url })
 }
 
-type nextPage = {nextPage: number}
+type nextPage = {nextPage: number | null}
 
 export async function getCategoryItems(item: string, pageParam: number): Promise<ResponseParams & nextPage>{
     const page_limit = 10;
-    let next_page: number = 0;
+    let next_page: null | number = null;
 
     const url = new URL("/api/resource/Item", HOST_URL)
     const filters = {"item_group": [
