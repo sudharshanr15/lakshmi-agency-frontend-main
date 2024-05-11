@@ -66,7 +66,7 @@ function page({ params }) {
                     <div className="bg-gray-200">
                         <div className="flex justify-between items-center max-w-[1800px] mx-auto p-4">
                             <h5 className="text-primary text-body lg:text-heading5">Total {cartItemsCount} products selected</h5>
-                            <Link href={""} className="bg-secondary-yellow text-sm py-4 px-8 text-sm-bold lg:text-body-bold">Preview & Request Order</Link>
+                            <Link href={"/dashboard/cart"} className="bg-secondary-yellow text-sm py-4 px-8 text-sm-bold lg:text-body-bold">Preview & Request Order</Link>
                         </div>
                     </div>
                 )

@@ -60,3 +60,14 @@ export async function getCategoryItems(item: string, pageParam: number): Promise
         statusCode: 0
     }))
 }
+
+export async function postOrder(items: {item_code: string, qty: number}[]){
+    const url = new URL("/api/method/lakshmiagency.api.v1.order.add_order", HOST_URL)
+    const headers = {
+        "Content-Type": "application/json"
+    }
+    const body = JSON.stringify({
+        "items": items
+    })
+    return Request({ url, method: "POST", headers, body})
+}
