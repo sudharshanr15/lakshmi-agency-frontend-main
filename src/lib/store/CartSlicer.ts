@@ -14,7 +14,7 @@ type CartSlicerType = {
 }
 
 const initialState: CartSlicerType = {
-    value: {}
+    value: JSON.parse(sessionStorage.getItem("cart") ?? "{}")
 }
 
 const cartSlicer = createSlice({

@@ -1,29 +1,33 @@
 'use client';
 
 import { add, remove } from "@/lib/store/CartSlicer";
+import { RootState } from "@/lib/store/store";
 import { CategoryItemData } from "@/types/items";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 
 const Card = (params: CategoryItemData) => {
     const dispatch = useDispatch()
+    const cartItems = useSelector((state: RootState) => state.cart)
+    const currentItemInCart = useMemo(() => {
+      return cartItems.value[params.item_code]
+    }, [cartItems])
+
   function showProductDetailCard() {
     // console.log("product clicked", itemCode);
     window.scrollTo({ top: 0, behavior: "smooth" });
     // dispatch(setSelectedProduct(itemCode));
   }
 
-  const [qty, setQty] = useState(0);
-  const [isChecked, setIsChecked] = useState(false);
+  const [qty, setQty] = useState(currentItemInCart ? currentItemInCart.qty : 0);
+  const [isChecked, setIsChecked] = useState<boolean | undefined>(currentItemInCart ? true : undefined);
 
   useEffect(() => {
-    if(isChecked){
-        setQty(1)
+    if(isChecked == true){
         dispatch(add({...params, qty}))
-    }else{
-        setQty(0)
+    }else if(isChecked == false){
         dispatch(remove(params))
     }
   }, [isChecked])
@@ -64,7 +68,12 @@ const Card = (params: CategoryItemData) => {
             type="checkbox"
             className="mt-2"
             checked={isChecked}
-            onChange={() => setIsChecked(prev => !prev)}
+            onChange={() => {
+              setIsChecked(prev => !prev)
+              setQty(prev => {
+                return Number(!prev)
+              })
+            }}
           />
           <h3
             className="ml-2 underline font-medium cursor-pointer"
