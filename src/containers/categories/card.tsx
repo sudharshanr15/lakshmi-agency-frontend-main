@@ -1,8 +1,14 @@
+'use client';
+
+import { add, remove } from "@/lib/store/CartSlicer";
 import { CategoryItemData } from "@/types/items";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 
 const Card = (params: CategoryItemData) => {
+    const dispatch = useDispatch()
   function showProductDetailCard() {
     // console.log("product clicked", itemCode);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -12,57 +18,43 @@ const Card = (params: CategoryItemData) => {
   const [qty, setQty] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
 
-  function checkBoxChanged() {
-    setIsChecked(!isChecked);
-    if (!isChecked) {
-      addProduct(params.item_code, qty);
-    } else {
-      removeProduct(params.item_code);
+  useEffect(() => {
+    if(isChecked){
+        setQty(1)
+        dispatch(add({...params, qty}))
+    }else{
+        setQty(0)
+        dispatch(remove(params))
     }
-  }
+  }, [isChecked])
 
-  function addProduct(itemCode, qty) {
-    if (qty == 0) {
-      setQty(1);
+  useEffect(() => {
+    if(qty != 0){
+        dispatch(add({...params, qty}))
     }
-    const payload = {
-      item_code: itemCode,
-      item_name: name,
-      qty: qty == 0 ? 1 : qty,
-    };
-    // dispatch(addProductsInCart(payload));
+  }, [qty])
+
+  function qtyIncrement(){
+    setQty(prev => {
+        if(prev == 0){
+            setIsChecked(true)
+            return 1
+        }else{
+            return prev + 1
+        }
+    })
   }
 
-  function removeProduct(itemCode) {
-    setQty(0);
-    // dispatch(removeProductFromCart(itemCode));
+  function qtyDecrement(){
+    setQty(prev => {
+        if(prev <= 1){
+            setIsChecked(false)
+            return 0
+        }else{
+            return prev - 1
+        }
+    })
   }
-
-  function changeQty(qty) {
-    setQty(qty);
-    if (isChecked) {
-      // add product
-      const payload = {
-        item_code: params.item_code,
-        item_name: name,
-        qty: qty,
-      };
-    //   dispatch(addProductsInCart(payload));
-    } else {
-      checkBoxChanged();
-    }
-  }
-
-//   function postWishList() {
-//     setWishlist(!wishlist);
-//     if (!wishlist) {
-//       // add to wishlist
-//       addToWishlist(itemCode);
-//     } else {
-//       // remove from the wishlist
-//       removeFromWishlist(itemCode);
-//     }
-//   }
 
   return (
     <div className="p-4 border rounded-md text-gray-500">
@@ -72,7 +64,7 @@ const Card = (params: CategoryItemData) => {
             type="checkbox"
             className="mt-2"
             checked={isChecked}
-            onChange={checkBoxChanged}
+            onChange={() => setIsChecked(prev => !prev)}
           />
           <h3
             className="ml-2 underline font-medium cursor-pointer"
@@ -97,13 +89,7 @@ const Card = (params: CategoryItemData) => {
             <button
               data-action="decrement"
               className=" text-gray-600 hover:text-gray-700 hover:border hover:bg-gray-300 h-full w-20 rounded-l-lg cursor-pointer outline-none"
-              onClick={() => {
-                if (qty == 1) {
-                  checkBoxChanged();
-                } else if (qty != 0) {
-                  changeQty(qty - 1);
-                }
-              }}
+              onClick={qtyDecrement}
             >
               <span className="m-auto text-2xl font-thin">−</span>
             </button>
@@ -117,7 +103,7 @@ const Card = (params: CategoryItemData) => {
             <button
               data-action="increment"
               className="text-gray-600 hover:text-gray-700 hover:bg-gray-300 hover:border h-full w-20 rounded-r-lg cursor-pointer"
-            //   onClick={(e) => changeQty(qty + 1)}
+              onClick={qtyIncrement}
             >
               <span className="m-auto text-2xl font-thin">+</span>
             </button>
