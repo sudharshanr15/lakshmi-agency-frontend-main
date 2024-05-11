@@ -30,9 +30,13 @@ function page({ params }) {
 
     const dispatch = useDispatch()
 
+    const product_name = useMemo(() => {
+        return decodeURI(params.product)
+    }, [params])
+
     const items_query = useInfiniteQuery({
-        queryKey: ["item", params.product],
-        queryFn: ({ pageParam }) => getCategoryItems(params.product, pageParam),
+        queryKey: ["item", product_name],
+        queryFn: ({ pageParam }) => getCategoryItems(product_name, pageParam),
         initialPageParam: 0,
         getNextPageParam: (lastPage) => lastPage.nextPage,
         staleTime: 1000 * 60 * 5
