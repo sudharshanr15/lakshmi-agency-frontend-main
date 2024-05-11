@@ -1,22 +1,7 @@
 import { getAccessToken } from "@/lib/session"
+import { RequestParams, ResponseParams } from "@/types/Request"
 
-type RequestMethod = "GET" | "POST"
-
-interface RequestParams {
-    url: string | URL,
-    method?: RequestMethod,
-    isAuthorized?: boolean,
-    headers?: {},
-    body?: string
-}
-
-interface ResponseParams {
-    status: boolean,
-    data?: any,
-    statusCode: number
-}
-
-export default async function Request({ url, method = "get", isAuthorized = true, headers = {}, body }: RequestParams): Promise<ResponseParams>{
+export default async function Request({ url, method = "GET", isAuthorized = true, headers = {}, body }: RequestParams): Promise<ResponseParams>{
     const tokens = await getAccessToken()
 
     let params: any = {}

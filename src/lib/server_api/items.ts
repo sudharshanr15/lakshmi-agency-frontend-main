@@ -1,5 +1,7 @@
 'use server';
 
+import { ResponseParams } from "@/types/Request";
+import { CategoryItemValidNames } from "@/types/items";
 import Request from "@/utils/Request"
 
 const HOST_URL = "https://portal.lakshmiagency.com"
@@ -15,16 +17,18 @@ export async function getItemGroups(){
     return Request({ url })
 }
 
-export async function getCategoryItems(item: string, pageParam: number){
+type nextPage = {nextPage: number}
+
+export async function getCategoryItems(item: string, pageParam: number): Promise<ResponseParams & nextPage>{
     const page_limit = 10;
-    let next_page: null | number = null;
+    let next_page: number = 0;
 
     const url = new URL("/api/resource/Item", HOST_URL)
     const filters = {"item_group": [
         "descendants of (inclusive)",
         item
     ]};
-    const fields = ["name", "image"]
+    const fields = CategoryItemValidNames
 
     url.searchParams.set("filters", JSON.stringify(filters))
     url.searchParams.set("fields", JSON.stringify(fields))
@@ -39,11 +43,13 @@ export async function getCategoryItems(item: string, pageParam: number){
 
             return {
                 ...res,
+                data: res.data.data,
                 nextPage: next_page
             }
         }else{
             return{
                 ...res,
+                data: res.data.data,
                 nextPage: next_page
             }
         }
