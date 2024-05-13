@@ -9,8 +9,9 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import Link from "next/link";
 import CategoryMenu from "./CategoryMenu";
 import MobileNavbar from "./MobileNavbar";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import MobileTopNavbar from "./mobile_nav/TopNavbar";
+import { logoutSession } from "@/lib/session";
 
 function Navbar() {
     const [categoryOpen, setCategoryOpen] = useState(false)
@@ -42,9 +43,12 @@ function Navbar() {
                         <SearchIcon className="text-secondary-yellow" />
                     </div>
                     <div>
-                        <button className="text-white">
+                        <button className="text-white" onClick={() => {
+                            logoutSession()
+                            redirect("/")
+                            }}>
                             <PersonIcon fontSize="large" />
-                            <span className="inline-block ms-2">Jhon Doe</span>
+                            <span className="inline-block ms-2">Logout</span>
                         </button>
                     </div>
                 </div>

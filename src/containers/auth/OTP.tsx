@@ -85,7 +85,7 @@ const OTP = ({ setAuthState, mobile }) => {
                         {errors.otp?.message && (<p className="text-rose-600">{errors.otp?.message}</p>)}
                     </div>
                     <div className="flex justify-between">
-                        <div>OTP expires in</div>
+                        {/* <div>OTP expires in</div> */}
                         {/* <div className="text-[#839398]">show time</div> */}
                     </div>
                     <div className="flex justify-between gap-[25px] ">
