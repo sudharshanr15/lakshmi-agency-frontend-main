@@ -12,7 +12,7 @@ const Card = (params: CategoryItemData) => {
     const dispatch = useDispatch()
     const cartItems = useSelector((state: RootState) => state.cart)
     const currentItemInCart = useMemo(() => {
-      return cartItems.value[params.item_code]
+      return cartItems.cart[params.item_code]
     }, [cartItems])
 
   function showProductDetailCard() {

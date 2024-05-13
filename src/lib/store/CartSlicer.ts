@@ -1,3 +1,5 @@
+'use client';
+
 import { CategoryItemData } from "@/types/items";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
@@ -8,13 +10,13 @@ type QuantityType = {
 type CartItemType = CategoryItemData & QuantityType
 
 type CartSlicerType = {
-    value: {
+    cart: {
         [key: string]: CartItemType
     }
 }
 
 const initialState: CartSlicerType = {
-    value: JSON.parse(sessionStorage.getItem("cart") ?? "{}")
+    cart: {}
 }
 
 const cartSlicer = createSlice({
@@ -22,21 +24,21 @@ const cartSlicer = createSlice({
     initialState,
     reducers: {
         add: (state: CartSlicerType, action: PayloadAction<CartItemType>) => {
-            state.value[action.payload.item_code] = action.payload
+            state.cart[action.payload.item_code] = action.payload
 
-            sessionStorage.setItem("cart", JSON.stringify(state.value));
+            localStorage.setItem("cart", JSON.stringify(state.cart));
         },
         remove: (state: CartSlicerType, action: PayloadAction<CategoryItemData>) => {
-            const temp_object = state.value
+            const temp_object = state.cart
             delete temp_object[action.payload.item_code]
 
-            state.value = temp_object
+            state.cart = temp_object
 
-            sessionStorage.setItem("cart", JSON.stringify(state.value));
+            localStorage.setItem("cart", JSON.stringify(state.cart));
         },
         clear: (state: CartSlicerType, action: PayloadAction<{}>) => {
-            state.value = {}
-            sessionStorage.setItem("cart", JSON.stringify(state.value));
+            state.cart = {}
+            localStorage.setItem("cart", JSON.stringify(state.cart));
         }
     }
 })

@@ -15,7 +15,7 @@ function page() {
     const dispatch = useDispatch()
     const cartItems = useSelector((state: RootState) => state.cart)
     const cartItemsCount = useMemo(() => {
-        return Object.keys(cartItems.value).length
+        return Object.keys(cartItems.cart).length
     }, [cartItems])
     const [orderStatus, setOrderStatus] = useState(false)
     const [isOrderLoading, setIsOrderLoading] = useState(false)
@@ -29,7 +29,7 @@ function page() {
         date.setDate(date.getDate() + 4)
         const delivery_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 
-        const items = Object.values(cartItems.value).map(item => (
+        const items = Object.values(cartItems.cart).map(item => (
             {
                 item_code: item.item_code,
                 qty: item.qty,
@@ -82,7 +82,7 @@ function page() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                     {
-                        Object.values(cartItems.value).map((item, index) => (
+                        Object.values(cartItems.cart).map((item, index) => (
                             <Card {...item} key={index} />
                         ))
                     }

@@ -25,7 +25,7 @@ function page({ params }) {
     const cartItems = useSelector((state: RootState) => state.cart)
 
     const cartItemsCount = useMemo(() => {
-        return Object.keys(cartItems.value).length
+        return Object.keys(cartItems.cart).length
     }, [cartItems])
 
     const dispatch = useDispatch()
