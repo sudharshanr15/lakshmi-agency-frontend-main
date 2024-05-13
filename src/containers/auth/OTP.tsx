@@ -86,7 +86,7 @@ const OTP = ({ setAuthState, mobile }) => {
                     </div>
                     <div className="flex justify-between">
                         <div>OTP expires in</div>
-                        <div className="text-[#839398]">show time</div>
+                        {/* <div className="text-[#839398]">show time</div> */}
                     </div>
                     <div className="flex justify-between gap-[25px] ">
                         <button
