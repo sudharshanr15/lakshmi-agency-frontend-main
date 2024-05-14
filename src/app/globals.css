@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base{
+    button:disabled{
+        opacity: 0.75;
+    }
+}
+
 @layer components{
   .otp-inputs {
     height: 40px;
