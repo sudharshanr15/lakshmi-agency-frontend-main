@@ -42,72 +42,50 @@ export function Footer() {
                 <div className="max-w-[1800px] mx-auto">
                     <div className="w-full p-4 md:flex md:items-center md:justify-between">
                         <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-white  sm:mt-0">
-                            <li>
-                                <Link
-                                    href="#"
-                                    className="mr-4 hover:underline md:mr-6"
+                            <li className='border-r last:border-r-0'>
+                                <span
+                                    className="hover:underline px-4"
                                 >
                                     Copyrights@2022 All rights reserved by
                                     Lakshmi Agency
-                                </Link>
+                                </span>
                             </li>
-                            <li>
+                            <li className='border-r last:border-r-0'>
                                 <Link
                                     href="#"
-                                    className="mr-4 hover:underline md:mr-6"
-                                >
-                                    |
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="#"
-                                    className="mr-4 hover:underline md:mr-6"
+                                    className="hover:underline px-4"
                                 >
                                     Privacy Policy
                                 </Link>
                             </li>
-                            <li>
+                            <li className='border-r last:border-r-0'>
                                 <Link
                                     href="#"
-                                    className="mr-4 hover:underline md:mr-6"
-                                >
-                                    |
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="#"
-                                    className="mr-4 hover:underline md:mr-6"
+                                    className="hover:underline px-4"
                                 >
                                     Cookie policy
                                 </Link>
                             </li>
-                            <li>
+                            <li className='border-r last:border-r-0'>
                                 <Link
                                     href="#"
-                                    className="mr-4 hover:underline md:mr-6"
+                                    className="hover:underline px-4"
                                 >
-                                    |
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="hover:underline">
                                     Terms of use
                                 </Link>
                             </li>
                         </ul>
 
                         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400 flex items-center space-x-4">
-                            <span className="flex items-center justify-center h-10 w-10 bg-[#356c88] rounded-md">
+                            <Link href={""} className="flex items-center justify-center h-10 w-10 bg-[#356c88] rounded-md">
                                 <FacebookIcon className="h-6 w-6 text-white" />
-                            </span>
-                            <span className="flex items-center justify-center h-10 w-10 bg-[#356c88] rounded-md">
+                            </Link>
+                            <Link href={""} className="flex items-center justify-center h-10 w-10 bg-[#356c88] rounded-md">
                                 <TwitterIcon className="h-6 w-6 text-white" />
-                            </span>
-                            <span className="flex items-center justify-center h-10 w-10 bg-[#356c88] rounded-md">
+                            </Link>
+                            <Link href={""} className="flex items-center justify-center h-10 w-10 bg-[#356c88] rounded-md">
                                 <LinkedInIcon className="h-6 w-6 text-white" />
-                            </span>
+                            </Link>
                         </span>
                     </div>
                 </div>
