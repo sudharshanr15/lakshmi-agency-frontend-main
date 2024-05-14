@@ -8,7 +8,7 @@ function Dashboard() {
   return (
     <>
         <MobileNavbar />
-        {/* <Footer /> */}
+        <Footer />
     </>
     )
 }
