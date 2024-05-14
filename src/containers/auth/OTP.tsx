@@ -1,3 +1,4 @@
+import CountDownTimer from "@/components/CountDownTimer";
 import Loading from "@/components/Loading";
 import { validateOTP } from "@/lib/server_api/auth";
 import { loginSession } from "@/lib/session";
@@ -14,6 +15,8 @@ const OTP = ({ setAuthState, mobile }) => {
     const [otp, setOtp] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [canRedirect, setCanRedirect] = useState(false)
+    const targetDate = new Date()
+    targetDate.setMinutes(targetDate.getMinutes() + 3)
 
     const {
         register,
@@ -85,8 +88,10 @@ const OTP = ({ setAuthState, mobile }) => {
                         {errors.otp?.message && (<p className="text-rose-600">{errors.otp?.message}</p>)}
                     </div>
                     <div className="flex justify-between">
-                        {/* <div>OTP expires in</div> */}
-                        {/* <div className="text-[#839398]">show time</div> */}
+                        <div>OTP expires in</div>
+                        <div className="text-[#839398]">
+                            <CountDownTimer targetDate={targetDate.getTime()} />
+                        </div>
                     </div>
                     <div className="flex justify-between gap-[25px] ">
                         <button
