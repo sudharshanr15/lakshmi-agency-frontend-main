@@ -15,7 +15,7 @@ const formResponse = {
 };
 
 export function Auth() {
-    const [authState, setAuthState] = useState("otp");
+    const [authState, setAuthState] = useState("login");
     const [mobile, setMobile] = useState("")
 
     return (
