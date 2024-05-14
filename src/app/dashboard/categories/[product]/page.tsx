@@ -80,7 +80,7 @@ function page({ params }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                     {
                         categoryItems.value.map((item, index) => (
-                            <Card {...item} key={index} />
+                            <Card {...item} key={item.item_code} />
                         ))
                     }
                 </div>
