@@ -13,7 +13,7 @@ export async function loginSession(data){
 
 export async function logoutSession(){
     const session = await getIronSession(cookies(), { password: PASSWORD, cookieName: "session_id"})
-    session.destroy()
+    return session.destroy()
 }
 
 export async function getSession(){
