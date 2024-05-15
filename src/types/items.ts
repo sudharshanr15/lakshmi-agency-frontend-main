@@ -16,3 +16,8 @@ export type CategoryItemData = {
 }
 
 export const CategoryItemValidNames = ["name", "item_code", "item_name", "item_group", "disabled", "image", "description", "brand"]
+
+export type OrderData = {
+    name: string,
+    transaction_date: string
+}

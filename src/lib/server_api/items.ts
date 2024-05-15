@@ -71,3 +71,9 @@ export async function postOrder(items: {item_code: string, qty: number, delivery
     })
     return Request({ url, method: "POST", headers, body})
 }
+
+export async function getOrders(){
+    const url = new URL("/api/method/lakshmiagency.api.v1.order.get_order", HOST_URL)
+
+    return Request({ url, method: "POST"})
+}
