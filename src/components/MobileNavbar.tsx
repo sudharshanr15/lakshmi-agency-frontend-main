@@ -5,6 +5,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import PersonIcon from "@mui/icons-material/Person";
 import gsap from "gsap";
 import Category from "./mobile_nav/Category";
+import ProfileMenu from "@/containers/profile/ProfileMenu";
 
 enum NavbarItems {
     HOME,
@@ -54,11 +55,16 @@ function MobileNavbar() {
     return (
         <>
             {
-                (currentItem != NavbarItems.HOME) ?
+                (currentItem != NavbarItems.HOME) &&
                 <div className="fixed top-0 left-0 w-full h-screen overflow-auto bg-white z-50 pb-32">
-                    {currentItem == NavbarItems.CATEGORY ? <Category /> : <></>}
-                </div> :
-                <></>
+                    {
+                        (currentItem == NavbarItems.CATEGORY) ?
+                        <Category /> :
+                        currentItem == NavbarItems.PROFILE ?
+                        <ProfileMenu /> :
+                        <></>
+                    }
+                </div>
             }
             <div className="xl:hidden w-full fixed bottom-0 left-0 rounded-ss-2xl rounded-se-2xl overflow-hidden z-50">
                 {/* <div className="bg-white">
