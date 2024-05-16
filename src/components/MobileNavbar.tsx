@@ -6,42 +6,42 @@ import PersonIcon from "@mui/icons-material/Person";
 import gsap from "gsap";
 import Category from "./mobile_nav/Category";
 import ProfileMenu from "@/containers/profile/ProfileMenu";
-
-enum NavbarItems {
-    HOME,
-    CATEGORY,
-    ORDERS,
-    PROFILE
-}
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/store/store";
+import { update } from "@/lib/store/MobileNavbar";
+import { MobileNavbarItems } from "@/types/navbar";
 
 function MobileNavbar() {
-    const navbarItems = [
-        {
+    const activeItem = useSelector((state: RootState) => state.mobileNavbar.activeItem)
+    const dispatch = useDispatch()
+
+    const navbarItems = {
+        "home": {
             name: "Home",
             icon: <HomeIcon />,
-            type: NavbarItems.HOME
+            type: MobileNavbarItems.HOME
         },
-        {
+        "category": {
             name: "Category",
             icon: <CategoryIcon />,
-            type: NavbarItems.CATEGORY
+            type: MobileNavbarItems.CATEGORY
         },
-        {
+        "orders": {
             name: "Orders",
             icon: <LocalMallIcon />,
-            type: NavbarItems.ORDERS
+            type: MobileNavbarItems.ORDERS
         },
-        {
+        "profile": {
             name: "Profile",
             icon: <PersonIcon />,
-            type: NavbarItems.PROFILE
-        },
-    ]
+            type: MobileNavbarItems.PROFILE
+        }
+    }
 
-    const [currentItem, setCurrentItem] = useState(NavbarItems.HOME)
+    const [currentItem, setCurrentItem] = useState(activeItem ?? MobileNavbarItems.HOME)
 
     useEffect(() => {
-        if(currentItem != NavbarItems.HOME){
+        if(currentItem != MobileNavbarItems.HOME){
             gsap.to("body", {
                 overflow: "hidden"
             })
@@ -50,17 +50,18 @@ function MobileNavbar() {
                 overflow: "auto"
             })
         }
+        dispatch(update(currentItem))
     }, [currentItem])
 
     return (
         <>
             {
-                (currentItem != NavbarItems.HOME) &&
+                (currentItem != MobileNavbarItems.HOME) &&
                 <div className="fixed top-0 left-0 w-full h-screen overflow-auto bg-white z-50 pb-32">
                     {
-                        (currentItem == NavbarItems.CATEGORY) ?
+                        (currentItem == MobileNavbarItems.CATEGORY) ?
                         <Category /> :
-                        currentItem == NavbarItems.PROFILE ?
+                        currentItem == MobileNavbarItems.PROFILE ?
                         <ProfileMenu /> :
                         <></>
                     }
@@ -75,7 +76,7 @@ function MobileNavbar() {
                 </div> */}
                 <div className="bg-primary p-4">
                     <div className="flex items-center justify-between">
-                        {navbarItems.map((item, index) => (
+                        {Object.values(navbarItems).map((item, index) => (
                             <button
                                 className={`${(currentItem == item.type) ? 'text-secondary-yellow' : 'text-gray-400'}`}
                                 onClick={() => setCurrentItem(item.type)}
