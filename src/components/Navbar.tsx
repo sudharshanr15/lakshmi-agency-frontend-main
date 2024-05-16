@@ -26,7 +26,7 @@ function Navbar() {
                     )
                 }
                 <div className="hidden xl:flex w-full justify-between text-white max-w-[1800px] mx-auto items-center gap-8 pt-4 px-4">
-                    <Link href={"/"} className="text-white font-bold">
+                    <Link href={"/dashboard"} className="text-white font-bold">
                         <img src="/assets/images/Lakshmi.png" className="inline h-full max-h-[48px] w-auto" alt="Brand Image" />
                         <span className="ms-2 text-nowrap">LAKSHMI AGENCY</span>
                     </Link>
@@ -43,13 +43,10 @@ function Navbar() {
                         <SearchIcon className="text-secondary-yellow" />
                     </div>
                     <div>
-                        <button className="text-white" onClick={() => {
-                            logoutSession()
-                            redirect("/")
-                            }}>
+                        <Link href={"/dashboard/profile"} className="text-white">
                             <PersonIcon fontSize="large" />
-                            <span className="inline-block ms-2">Logout</span>
-                        </button>
+                            <span className="inline-block ms-2">Username</span>
+                        </Link>
                     </div>
                 </div>
                 <hr className="hidden xl:block border-b border-[#E9EBF0] my-3" />
