@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "react-toastify/ReactToastify.min.css";
 import "./globals.css";
 
 import ApplicationWrapper from "@/wrappers/ApplicationWrapper";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  weight: "400",
+  subsets: ["latin"]
+});
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <ApplicationWrapper>
           {children}
         </ApplicationWrapper>
