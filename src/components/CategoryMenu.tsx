@@ -29,7 +29,7 @@ function CategoryLoading(){
     )
 }
 
-function CategoryMenu({ setCategoryOpen }) {
+function CategoryMenu({ isOpen, setCategoryOpen }) {
     const categoryQuery = useQuery({
         queryKey: ["item_group"],
         queryFn: loadData,
@@ -53,7 +53,7 @@ function CategoryMenu({ setCategoryOpen }) {
     }
 
   return (
-    <div className="absolute left-0 top-full h-screen max-h-screen overflow-y-auto z-50 w-full backdrop-blur">
+    <div className={`absolute left-0 top-full h-screen max-h-screen overflow-y-auto z-50 w-full backdrop-blur ${isOpen ? "block" : "hidden"}`}>
         <div className="flex h-full border border-[#EAEAEA]">
             <div className="bg-[#F2F2F2] h-full">
                 <div className="flex flex-col w-full my-4">

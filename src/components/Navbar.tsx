@@ -65,7 +65,7 @@ function Navbar() {
                         <button className="border border-secondary-yellow text-secondary-yellow px-4 py-2 rounded">Become a Seller</button>
                     </div>
                 </div>
-                {categoryOpen && <CategoryMenu setCategoryOpen={setCategoryOpen} />}
+                <CategoryMenu isOpen={categoryOpen} setCategoryOpen={setCategoryOpen} />
             </div>
         </>
         // <div>
