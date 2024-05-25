@@ -11,11 +11,24 @@ import CategoryMenu from "./CategoryMenu";
 import MobileNavbar from "./MobileNavbar";
 import { redirect, usePathname } from "next/navigation";
 import MobileTopNavbar from "./mobile_nav/TopNavbar";
-import { logoutSession } from "@/lib/session";
+import { getAccessToken, logoutSession } from "@/lib/session";
+import { getUserProfile } from "@/lib/server_api/items";
+import { useQuery } from "@tanstack/react-query";
 
 function Navbar() {
     const [categoryOpen, setCategoryOpen] = useState(false)
     const pathname = usePathname()
+
+    const userProfileQuery = useQuery({
+        queryKey: ["user_profile"],
+        queryFn: loadData
+    })
+
+    getAccessToken().then(res => console.log(res))
+
+    function loadData(){
+        return getUserProfile()
+    }
 
     return (
         <>
@@ -30,10 +43,12 @@ function Navbar() {
                         <img src="/assets/images/Lakshmi.png" className="inline h-full max-h-[48px] w-auto" alt="Brand Image" />
                         <span className="ms-2 text-nowrap">LAKSHMI AGENCY</span>
                     </Link>
-                    <div>
-                        <MyLocationIcon className="me-2" />
-                        Delivery to trichy - <span className="text-secondary-yellow">600000</span>
-                    </div>
+                    {userProfileQuery.isSuccess && (
+                        <div>
+                            <MyLocationIcon className="me-2" />
+                            Delivery to {userProfileQuery.data.address?.city} - <span className="text-secondary-yellow">{userProfileQuery.data.address?.pincode}</span>
+                        </div>
+                    )}
                     <div className="bg-white text-black rounded-md py-2 pl-10 pr-4 sm:text-sm flex-grow max-w-[600px] flex">
                         <input
                             type="text"
@@ -45,7 +60,9 @@ function Navbar() {
                     <div>
                         <Link href={"/dashboard/profile"} className="text-white">
                             <PersonIcon fontSize="large" />
-                            <span className="inline-block ms-2">Username</span>
+                            {userProfileQuery.isSuccess && (
+                                <span className="inline-block ms-2">{userProfileQuery.data.profile?.customer_name}</span>
+                            )}
                         </Link>
                     </div>
                 </div>
