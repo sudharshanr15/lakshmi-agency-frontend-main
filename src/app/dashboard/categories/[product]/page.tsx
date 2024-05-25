@@ -11,6 +11,7 @@ import { updateData } from "@/lib/store/CategoryItemsSlicer";
 import { RootState } from "@/lib/store/store";
 import Loading from "@/components/Loading";
 import Link from "next/link";
+import CartCountTracker from "@/components/CartCountTracker";
 
 function PageLoading(){
     return (
@@ -22,11 +23,6 @@ function PageLoading(){
 
 function page({ params }) {
     const categoryItems = useSelector((state: RootState) => state.category_items)
-    const cartItems = useSelector((state: RootState) => state.cart)
-
-    const cartItemsCount = useMemo(() => {
-        return Object.keys(cartItems.cart).length
-    }, [cartItems])
 
     const dispatch = useDispatch()
 
@@ -65,16 +61,7 @@ function page({ params }) {
 
     return (
         <>
-            {
-                (cartItemsCount != 0) && (
-                    <div className="bg-gray-200">
-                        <div className="flex justify-between items-center max-w-[1800px] mx-auto p-4">
-                            <h5 className="text-primary text-body lg:text-heading5">Total {cartItemsCount} products selected</h5>
-                            <Link href={"/dashboard/cart"} className="bg-secondary-yellow text-sm py-4 px-8 text-sm-bold lg:text-body-bold">Preview & Request Order</Link>
-                        </div>
-                    </div>
-                )
-            }
+            <CartCountTracker />
             <div className="bg-white max-w-[1800px] mx-auto p-4">
 
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">

@@ -103,3 +103,45 @@ export async function getUserProfile(): Promise<Partial<UserProfile>>{
         }
     }).catch(err => Promise.reject(err))
 }
+
+export async function getSearchItems(item: string, pageParam: number): Promise<ResponseParams & nextPage>{
+    const page_limit = 10;
+    let next_page: null | number = null;
+
+    const url = new URL("/api/resource/Item", HOST_URL)
+    const filters = {"item_name": [
+        "like",
+        "180 MTRS CRI ZFIRE WIRES 1.0 SQ.MM BLACK"
+    ]};
+    const fields = CategoryItemValidNames
+
+    url.searchParams.set("filters", JSON.stringify(filters))
+    url.searchParams.set("fields", JSON.stringify(fields))
+    url.searchParams.set("limit_start", pageParam.toString())
+    url.searchParams.set("limit_page_length", page_limit.toString())
+
+    return Request({ url }).then(res => {
+        if(res.status){
+            if(res.data.data.length == page_limit){
+                next_page = pageParam + page_limit
+            }
+
+            return {
+                ...res,
+                data: res.data.data,
+                nextPage: next_page
+            }
+        }else{
+            return{
+                ...res,
+                data: res.data.data,
+                nextPage: next_page
+            }
+        }
+    }).catch(err => ({
+        status: false,
+        data: [],
+        nextPage: next_page,
+        statusCode: 0
+    }))
+}

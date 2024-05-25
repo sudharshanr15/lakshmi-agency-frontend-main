@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import CategoryItemReducer from "./CategoryItemsSlicer"
 import CartSlicer from "./CartSlicer"
+import SearchSlicer from "./SearchSlicer"
 import storage from "redux-persist/lib/storage"
 import { persistReducer } from "redux-persist"
 import MobileNavbar from "./MobileNavbar"
@@ -14,7 +15,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
     category_items: CategoryItemReducer,
     cart: persistReducer(persistConfig, CartSlicer),
-    mobileNavbar: MobileNavbar
+    mobileNavbar: MobileNavbar,
+    search: SearchSlicer
 })
 
 export const store = configureStore({

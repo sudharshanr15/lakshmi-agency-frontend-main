@@ -9,25 +9,43 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import Link from "next/link";
 import CategoryMenu from "./CategoryMenu";
 import MobileNavbar from "./MobileNavbar";
-import { redirect, usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import MobileTopNavbar from "./mobile_nav/TopNavbar";
-import { getAccessToken, logoutSession } from "@/lib/session";
+import { logoutSession } from "@/lib/session";
 import { getUserProfile } from "@/lib/server_api/items";
 import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function Navbar() {
     const [categoryOpen, setCategoryOpen] = useState(false)
     const pathname = usePathname()
+    const router = useRouter()
 
     const userProfileQuery = useQuery({
         queryKey: ["user_profile"],
         queryFn: loadData
     })
 
-    getAccessToken().then(res => console.log(res))
-
     function loadData(){
         return getUserProfile()
+    }
+
+    const searchSchema = z.object({
+        search: z.string().min(1)
+    })
+
+    const {
+        handleSubmit,
+        formState: { errors },
+        register
+    } = useForm({
+        resolver: zodResolver(searchSchema)
+    })
+
+    function onSearch(data){
+        router.push("/dashboard/search/" + data.search)
     }
 
     return (
@@ -49,13 +67,18 @@ function Navbar() {
                             Delivery to {userProfileQuery.data.address?.city} - <span className="text-secondary-yellow">{userProfileQuery.data.address?.pincode}</span>
                         </div>
                     )}
-                    <div className="bg-white text-black rounded-md py-2 pl-10 pr-4 sm:text-sm flex-grow max-w-[600px] flex">
-                        <input
-                            type="text"
-                            className="flex-grow focus:outline-none placeholder-gray-400 me-4"
-                            placeholder="Search for any products..."
-                        />
-                        <SearchIcon className="text-secondary-yellow" />
+                    <div className={`bg-white text-black rounded-md py-2 pl-10 pr-4 sm:text-sm flex-grow max-w-[600px] ${errors.search?.message ? "border-2 border-red-400" : ""}`}>
+                        <form onSubmit={handleSubmit(onSearch)} className="flex me-4">
+                            <input
+                                type="text"
+                                className="flex-grow focus:outline-none placeholder-gray-400 w-full"
+                                placeholder="Search for any products..."
+                                {...register("search")}
+                            />
+                            <button type="submit">
+                                <SearchIcon className="text-secondary-yellow" />
+                            </button>
+                        </form>
                     </div>
                     <div>
                         <Link href={"/dashboard/profile"} className="text-white">
