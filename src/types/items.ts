@@ -21,3 +21,21 @@ export type OrderData = {
     name: string,
     transaction_date: string
 }
+
+export type UserProfile = {
+    profile: {
+        customer_name: string,
+        custom_mobile_number: string,
+        email_id?: string,
+        primary_address: string
+    },
+    address: {
+        name: string,
+        address_line1: string,
+        city: string,
+        state: string,
+        country: string,
+        pincode: string,
+        email_id?: string
+    }
+}

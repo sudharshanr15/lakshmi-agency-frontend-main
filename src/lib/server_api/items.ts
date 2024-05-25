@@ -1,7 +1,7 @@
 'use server';
 
 import { ResponseParams } from "@/types/Request";
-import { CategoryItemValidNames } from "@/types/items";
+import { CategoryItemValidNames, UserProfile } from "@/types/items";
 import Request from "@/utils/Request"
 
 const HOST_URL = "https://portal.lakshmiagency.com"
@@ -76,4 +76,30 @@ export async function getOrders(){
     const url = new URL("/api/method/lakshmiagency.api.v1.order.get_order", HOST_URL)
 
     return Request({ url, method: "POST"})
+}
+
+export async function getUserProfile(): Promise<Partial<UserProfile>>{
+    const url = new URL("/api/method/lakshmiagency.api.v1.customer.get_profile", HOST_URL)
+
+    const response: Partial<UserProfile> = {}
+
+    return Request({ url }).then(res => {
+        if(res.status){
+            const profile = res.data.message.profile[0]
+            const address = res.data.message.address[0]
+            if(profile){
+                const {customer_name, custom_mobile_number, email_id, primary_address} = profile
+                response.profile = {customer_name, custom_mobile_number, email_id, primary_address}
+            }
+
+            if(address){
+                const {name, address_line1, city, state, country, pincode, email_id } = address
+                response.address = {name, address_line1, city, state, country, pincode, email_id }
+            }
+
+            return response
+        }else{
+            return Promise.reject("Unable to fetch data")
+        }
+    }).catch(err => Promise.reject(err))
 }
