@@ -29,7 +29,7 @@ function RecentOrders({ isNarrowed = false }: { isNarrowed?: boolean}) {
     return (
         <section className='w-full md:w-max'>
             <div className="flex justify-between">
-                <h2 className='text-heading5 font-semibold mb-8'>Recent Orders</h2>
+                <h2 className='text-body-big-bold md:text-heading5 !font-semibold mb-4'>Recent Orders</h2>
                 {(isNarrowed && ordersQuery.data?.length > narrowedCount) && (
                     <Link href={"/dashboard/orders"} className='underline text-blue-500'>
                         View All

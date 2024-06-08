@@ -6,7 +6,7 @@ import LocalMallIcon from "@mui/icons-material/LocalMall";
 import CategoryIcon from "@mui/icons-material/Category";
 import PersonIcon from "@mui/icons-material/Person";
 import gsap from "gsap";
-import Category from "./mobile_nav/Category";
+import Category from "./Category";
 import ProfileMenu from "@/containers/profile/ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store/store";
@@ -37,7 +37,8 @@ function MobileNavbar({ active = MobileNavbarItems.HOME }: { active: MobileNavba
             name: "Category",
             icon: <CategoryIcon />,
             type: MobileNavbarItems.CATEGORY,
-            linkType: LinkType.BUTTON
+            linkType: LinkType.BUTTON,
+            id: "nav-item_category"
         },
         "orders": {
             name: "Orders",
@@ -83,7 +84,7 @@ function MobileNavbar({ active = MobileNavbarItems.HOME }: { active: MobileNavba
                     }
                 </div>
             }
-            <div className="xl:hidden w-full fixed bottom-0 left-0 rounded-ss-2xl rounded-se-2xl overflow-hidden z-50">
+            <div className="xl:hidden w-full fixed bottom-0 left-0 rounded-ss-2xl rounded-se-2xl overflow-hidden z-50" id="navbar-mobile">
                 {/* <div className="bg-white">
                     <p>first</p>
                     <p>first</p>
@@ -99,6 +100,7 @@ function MobileNavbar({ active = MobileNavbarItems.HOME }: { active: MobileNavba
                                         href={item.href}
                                         className={`${(currentItem == item.type) ? 'text-secondary-yellow' : 'text-gray-400'} text-center`}
                                         onClick={() => setCurrentItem(item.type)}
+                                        {...(item.id && {id: item.id})}
                                     >
                                         {item.icon}
                                         <span className="mt-1 block text-sm">{item.name}</span>
@@ -109,6 +111,7 @@ function MobileNavbar({ active = MobileNavbarItems.HOME }: { active: MobileNavba
                                     <button
                                         className={`${(currentItem == item.type) ? 'text-secondary-yellow' : 'text-gray-400'}`}
                                         onClick={() => setCurrentItem(item.type)}
+                                        {...(item.id && {id: item.id})}
                                     >
                                         {item.icon}
                                         <span className="mt-1 block text-sm">{item.name}</span>

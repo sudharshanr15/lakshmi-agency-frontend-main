@@ -1,7 +1,7 @@
 import { getItemGroups } from '@/lib/server_api/items'
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
-import Loading from '../Loading'
+import Loading from './Loading'
 import { ItemGroupData } from '@/types/items'
 import Link from 'next/link'
 import gsap from 'gsap'
@@ -16,7 +16,7 @@ function CategoryLoading(){
     )
 }
 
-function Category() {
+function Category({ isNarrowed = false }: { isNarrowed?: boolean }) {
     const categoryQuery = useQuery({
         queryKey: ["item_group"],
         queryFn: loadData,
@@ -44,7 +44,7 @@ function Category() {
     }
 
     return (
-        <div className="p-4 grid grid-cols-3 gap-x-4 gap-y-12">
+        <div className={`p-4 grid grid-cols-3 md:grid-cols-6 gap-x-4 gap-y-12 overflow-hidden ${isNarrowed ? "grid-rows-[140px] max-h-[140px]" : ""}`}>
             {categoryQuery.data.map((item: ItemGroupData, index: number) => (
                 <Link href={"/dashboard/categories/" + item.name} key={index} className='text-center hover:bg-[#EAEAEA]' onClick={setBodyScroll}>
                     <div className="flex flex-col items-center justify-center">

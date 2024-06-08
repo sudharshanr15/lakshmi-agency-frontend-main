@@ -92,11 +92,11 @@ function Navbar() {
                 <hr className="hidden xl:block border-b border-[#E9EBF0] my-3" />
                 <div className="hidden xl:flex items-center justify-between text-white max-w-[1800px] mx-auto pb-4 px-4">
                     <div>
-                        <button className="text-sm-bold text-white px-4 border-r border-r-[#E9EBF0]" onClick={() => setCategoryOpen(prev => !prev)}>
+                        <button className="text-sm-bold text-white px-4 border-r border-r-[#E9EBF0]" onClick={() => setCategoryOpen(prev => !prev)} id="nav-item_category">
                             <CategoryIcon />
                             <span className="ms-2">Categories</span>
                         </button>
-                        <Link href={""} className="text-sm-bold text-white px-4">
+                        <Link href={"/dashboard/orders"} className="text-sm-bold text-white px-4">
                             <LocalMallIcon />
                             <span className="ms-2">Orders</span>
                         </Link>
