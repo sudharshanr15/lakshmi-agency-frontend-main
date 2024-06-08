@@ -6,8 +6,10 @@ import React from 'react'
 import Loading from '../Loading';
 import { OrderData } from '@/types/items';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import Link from 'next/link';
 
-function RecentOrders() {
+function RecentOrders({ isNarrowed = false }: { isNarrowed?: boolean}) {
+    const narrowedCount = 10;
     const queryClient = useQueryClient()
     const ordersQuery = useQuery({
         queryKey: ["orders"],
@@ -25,9 +27,16 @@ function RecentOrders() {
     }
 
     return (
-        <section className='w-full'>
-            <h2 className='text-heading5 font-semibold mb-8'>Recent Orders</h2>
-            <table className='md:min-w-[500px] max-w-full w-full md:w-max p-5'>
+        <section className='w-full md:w-max'>
+            <div className="flex justify-between">
+                <h2 className='text-heading5 font-semibold mb-8'>Recent Orders</h2>
+                {(isNarrowed && ordersQuery.data?.length > narrowedCount) && (
+                    <Link href={"/dashboard/orders"} className='underline text-blue-500'>
+                        View All
+                    </Link>
+                )}
+            </div>
+            <table className='md:min-w-[500px] max-w-full w-full p-5'>
                 <thead className='bg-[#E7EEF1]'>
                     <tr className=''>
                         <th className='text-sm font-normal text-gray-500 text-start p-4'>Order ID</th>
@@ -52,7 +61,7 @@ function RecentOrders() {
                                 </button>
                             </td>
                         </tr>
-                    ) : ordersQuery.data.map((item: OrderData, index: number) => (
+                    ) : ordersQuery.data.slice(0, isNarrowed ? narrowedCount : ordersQuery.data.length).map((item: OrderData, index: number) => (
                         <tr className='border-b border-gray-200' key={item.name}>
                             <td className='p-3 text-gray-500'>{item.name}</td>
                             <td className='p-3 text-gray-500'>{item.transaction_date}</td>
