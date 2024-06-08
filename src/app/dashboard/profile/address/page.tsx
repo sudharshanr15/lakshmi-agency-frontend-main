@@ -30,8 +30,6 @@ function page() {
         )
     }
 
-    throw new Error("sdfsdf")
-
   return (
     <div className='flex flex-col gap-8'>
         <h4 className='font-medium hidden xl:block'>Delivery Address</h4>

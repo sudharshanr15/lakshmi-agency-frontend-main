@@ -56,7 +56,7 @@ export function Auth() {
             <div className="max-w-[1800px] mx-auto h-full">
                 <div className="flex md:h-full items-center md:mx-8 gap-12">
                     <div className="hidden md:block">
-                        <h1 className="text-white text-2xl md:text-3xl font-bold text-nowrap">
+                        <h1 className="text-white text-2xl md:text-heading3 !font-bold">
                             Join{" "}
                             <span className="text-yellow-300">
                                 {" "}
@@ -69,7 +69,7 @@ export function Auth() {
                             </span>
                         </h1>
                     </div>
-                    <div className="flex-grow">
+                    <div className="flex-grow min-w-[400px] max-w-[750px]">
                         {authState == "login" ? (
                             <Login setAuthState={setAuthState} setMobile={setMobile} />
                         ) : (
