@@ -25,7 +25,9 @@ function Dashboard() {
           <div className="flex flex-col md:flex-row gap-4">
             <RecentOrders isNarrowed={true} />
             <div className="flex-grow">
-              <OrdersChart />
+              {(typeof window !== 'undefined') && (
+                <OrdersChart />
+              )}
             </div>
           </div>
         </div>

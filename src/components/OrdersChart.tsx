@@ -13,11 +13,18 @@ const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 const month_orders = Array(12).fill(0)
 
 function OrdersChart() {
+    const [Chart, setChart] = useState<any>([]);
     const [series, setSeries] = useState([])
     const ordersQuery = useQuery({
         queryKey: ["orders"],
         queryFn: loadData
     })
+
+    useEffect(() => {
+        import("react-apexcharts").then((res) => {
+            setChart(() => res.default)
+        })
+    }, [])
 
     function loadData(){
         return getOrders().then(res => {
@@ -65,7 +72,9 @@ function OrdersChart() {
 
   return (
     <div>
-        <ReactApexChart width="100%" options={options} series={series} />
+        {(typeof window != "undefined" && Chart) && (
+            <Chart width="100%" options={options} series={series} />
+        )}
     </div>
   )
 }
